@@ -3,6 +3,7 @@
 import { pricePerGram } from "@/lib/constants";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 
 export default function Order() {
 	const [firstName, setFirstName] = useState("");
@@ -87,15 +88,18 @@ export default function Order() {
 						className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4">
 						Google Drive Link
 					</label>
-					<div className="absolute bottom-2 right-1 size-5 text-gray-400">
-						<span className="group/info relative">
+					<Popover className="absolute bottom-2 right-1 size-5 text-gray-400">
+						<PopoverButton className="outline-none">
 							<InformationCircleIcon className="inline size-5" />
-							<span className="absolute bottom-full right-0 -z-50 w-max max-w-sm translate-y-2 rounded bg-gray-700 px-2 py-1 text-sm font-light text-gray-200 opacity-0 duration-150 group-hover/info:-translate-y-0.5 group-hover/info:opacity-100">
-								Upload all files into a Google Drive Folder and put the link here. Make sure it&apos;s shared with
-								everyone with the link!
-							</span>
-						</span>
-					</div>
+						</PopoverButton>
+						<PopoverPanel
+							transition
+							anchor="top end"
+							className="w-96 -translate-y-1 rounded bg-gray-700 px-2 py-1 text-sm font-light text-gray-200 transition duration-150 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:translate-y-0 data-[closed]:opacity-0">
+							Upload all files into a Google Drive Folder and put the link here. Make sure it&apos;s shared with
+							everyone with the link!
+						</PopoverPanel>
+					</Popover>
 				</div>
 
 				<div className="group relative z-0 mb-5 w-full">
