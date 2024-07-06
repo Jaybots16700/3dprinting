@@ -15,6 +15,7 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, LinkIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { WithId } from "mongodb";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -69,17 +70,24 @@ export default function AdminDashboard() {
 							</Listbox>
 						</DisclosureButton>
 						<DisclosurePanel className="space-y-4 rounded-b-xl border border-t-0 border-slate-700 bg-zinc-800 p-4">
-							<div className="flex w-full">
-								<div className="w-full">
-									<span className="font-light text-gray-200">Name: </span>
-									<span className="font-semibold">{order.user.name}</span>
-								</div>
-								<div className="w-full">
-									<span className="font-light text-gray-200">Email: </span>
-									<Link href={`mailto:${order.user.email}`} target="_blank" className="font-semibold">
-										{order.user.email}
-									</Link>
-								</div>
+							<div className="flex w-full justify-between">
+								<span className="inline">
+									{"image" in order.user && (
+										<img
+											src={order.user.image}
+											className="mr-2 inline size-6 rounded-full"
+											alt="Profile Picture"
+											height={24}
+											width={24}
+											referrerPolicy="no-referrer"
+										/>
+									)}
+									{order.user.name}
+								</span>
+
+								<Link href={`mailto:${order.user.email}`} target="_blank">
+									{order.user.email}
+								</Link>
 							</div>
 
 							<Divider />
