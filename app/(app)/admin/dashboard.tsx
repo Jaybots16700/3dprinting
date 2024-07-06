@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/badge";
+import { Divider } from "@/components/divider";
 import { getAllOrders, updateStatus } from "@/lib/serverActions";
 import { PartOrder, OrderStatus } from "@/types";
 import {
@@ -12,7 +13,7 @@ import {
 	ListboxOption,
 	ListboxOptions,
 } from "@headlessui/react";
-import { LinkIcon } from "@heroicons/react/24/solid";
+import { CheckIcon, LinkIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { WithId } from "mongodb";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -67,7 +68,43 @@ export default function AdminDashboard() {
 								</ListboxOptions>
 							</Listbox>
 						</DisclosureButton>
-						<DisclosurePanel className="flex h-64 rounded-b-xl border border-t-0 border-slate-700 bg-zinc-800"></DisclosurePanel>
+						<DisclosurePanel className="space-y-4 rounded-b-xl border border-t-0 border-slate-700 bg-zinc-800 p-4">
+							<div className="flex w-full">
+								<div className="w-full">
+									<span className="font-light text-gray-200">Name: </span>
+									<span className="font-semibold">{order.username}</span>
+								</div>
+								<div className="w-full">
+									<span className="font-light text-gray-200">Email: </span>
+									<Link href={`mailto:${order.email}`} target="_blank" className="font-semibold">
+										{order.email}
+									</Link>
+								</div>
+							</div>
+
+							<Divider />
+
+							<div className="w-full space-y-2">
+								<div className="">
+									<span className="font-light text-gray-200">Purpose: </span>
+									<span className="font-semibold">{order.purpose}</span>
+								</div>
+								{order.other && (
+									<div className="">
+										<span className="font-light text-gray-200">Other: </span>
+										<span className="font-semibold">{order.other}</span>
+									</div>
+								)}
+								<div className="">
+									<span className="font-light text-gray-200">Timelapse: </span>
+									{order.timelapse ? (
+										<CheckIcon className="inline size-4 text-green-600" />
+									) : (
+										<XMarkIcon className="inline size-4 text-red-500" />
+									)}
+								</div>
+							</div>
+						</DisclosurePanel>
 					</Disclosure>
 				))}
 			</div>

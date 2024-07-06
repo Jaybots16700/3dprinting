@@ -7,6 +7,7 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { addOrder } from "@/lib/serverActions";
 import { Timestamp } from "mongodb";
+import { Divider } from "@/components/divider";
 
 export default function Order() {
 	const router = useRouter();
@@ -170,8 +171,4 @@ export default function Order() {
 			</form>
 		</div>
 	);
-}
-
-function Divider({ className }: { className?: string }) {
-	return <div className={`h-px w-full bg-gradient-to-l from-transparent via-blue-500 to-transparent ${className}`} />;
 }
