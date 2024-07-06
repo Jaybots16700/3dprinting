@@ -1,11 +1,11 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import { clientPromise, connectToDatabase } from "@/lib/mongodb";
 import { env } from "@/env";
 import type { User } from "@/types";
 
-export const { auth, handlers, signIn, signOut } = NextAuth({
+export const authOptions: NextAuthOptions = {
 	adapter: MongoDBAdapter(clientPromise, { databaseName: "3dprinting" }),
 	providers: [GoogleProvider({ clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET })],
 	callbacks: {
@@ -26,8 +26,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 	},
 	pages: {
 		signIn: "/signin",
-		verifyRequest: "/verify",
 	},
 	secret: env.NEXTAUTH_SECRET,
 	debug: false, // env.NODE_ENV === "development",
-});
+};
