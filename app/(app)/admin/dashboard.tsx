@@ -2,12 +2,10 @@
 
 import { Badge } from "@/components/badge";
 import { getAllOrders } from "@/lib/serverActions";
-import type { OrderStatus, PartOrder } from "@/types";
-import { ArrowLongRightIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
+import { PartOrder } from "@/types";
 import { useEffect, useState } from "react";
 
-export default function Home() {
+export default function AdminDashboard() {
 	const [orders, setOrders] = useState<PartOrder[]>([]);
 
 	useEffect(() => {
@@ -15,7 +13,7 @@ export default function Home() {
 	}, []);
 
 	return (
-		<div className="flex flex-col items-center p-24">
+		<div className="flex flex-col items-center justify-between p-24">
 			<div className="mb-16 w-full max-w-3xl space-y-4">
 				{orders.map((order) => (
 					<div
@@ -26,12 +24,6 @@ export default function Home() {
 					</div>
 				))}
 			</div>
-			<Link
-				href="/order"
-				className="group flex items-center space-x-1.5 rounded-lg border border-slate-800 py-2 pl-5 pr-4 text-2xl duration-200 hover:border-blue-600/30">
-				<span>Order!</span>
-				<ArrowLongRightIcon className="size-6 text-blue-600/50 duration-200 group-hover:translate-x-2 group-hover:text-blue-600" />
-			</Link>
 		</div>
 	);
 }
