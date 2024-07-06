@@ -4,7 +4,9 @@ import { Badge } from "@/components/badge";
 import { getAllOrders, updateStatus } from "@/lib/serverActions";
 import { PartOrder, OrderStatus } from "@/types";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
+import { LinkIcon } from "@heroicons/react/24/solid";
 import { WithId } from "mongodb";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function AdminDashboard() {
@@ -21,8 +23,13 @@ export default function AdminDashboard() {
 				{orders.map((order, index) => (
 					<div
 						key={order.link}
-						className="flex h-10 w-full items-center justify-between rounded-xl border border-slate-700 bg-zinc-800 px-4 pr-2">
-						<span>{order.partName}</span>
+						className="flex h-10 w-full items-center justify-between rounded-xl border border-slate-700 bg-zinc-800 px-2">
+						<div className="flex items-center space-x-2 pl-1">
+							<Link href={order.link}>
+								<LinkIcon className="size-4 text-gray-400 duration-150 hover:text-white" />
+							</Link>
+							<span>{order.partName}</span>
+						</div>
 						<Listbox
 							value={order.status}
 							onChange={async (newStatus) => {
