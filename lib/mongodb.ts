@@ -1,6 +1,6 @@
 import { type Db, MongoClient } from "mongodb";
 import { env } from "@/env";
-import { PartOrder } from "@/types";
+import { PartOrder, User } from "@/types";
 
 // Export a module-scoped MongoClient promise. By doing this in a
 // separate module, the client can be shared across functions.
@@ -19,5 +19,6 @@ export async function connectToDatabase(dbName: string = "3dprinting") {
 		client,
 		db,
 		ordersDb: db.collection<PartOrder>("orders"),
+		usersDb: db.collection<User>("users"),
 	};
 }

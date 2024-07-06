@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import { DefaultSession } from "next-auth";
 
 declare global {
@@ -10,8 +10,7 @@ export type OrderStatus = "received" | "queued" | "printing" | "awaiting payment
 
 export interface PartOrder {
 	partName: string;
-	username: string;
-	email: string;
+	user: { name: string; email: string } | User;
 	link: string;
 	purpose: string;
 	other?: string;
@@ -23,10 +22,9 @@ export interface PartOrder {
 
 export interface User {
 	id: string;
-	name?: string;
+	name: string;
 	email: string;
-	image?: string;
-	last_login?: Date;
+	image: string;
 	isAdmin?: boolean;
 }
 

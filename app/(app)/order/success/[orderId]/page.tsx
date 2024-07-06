@@ -17,8 +17,8 @@ export default function Success({ params }: { params: { orderId: string } }) {
 			<h1 className="text-6xl font-semibold">Order Placed!</h1>
 			<p className="mt-4 max-w-xl text-center font-light text-slate-300">
 				You will receive an email with in the next few days with the price (${pricePerGram} per gram
-				{order?.timelapse ? " + $2 for the timelapse" : ""}) and payment/delivery information to {order?.email}. We will
-				reach out with any questions about your order.
+				{order?.timelapse ? " + $2 for the timelapse" : ""}) and payment/delivery information to {order?.user.email}. We
+				will reach out with any questions about your order.
 			</p>
 		</div>
 	);

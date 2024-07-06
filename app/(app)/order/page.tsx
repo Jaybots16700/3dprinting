@@ -155,8 +155,10 @@ export default function Order() {
 						e.preventDefault();
 						const orderId = await addOrder({
 							partName,
-							username,
-							email,
+							user: {
+								name: username,
+								email,
+							},
 							link: driveLink,
 							purpose,
 							other,

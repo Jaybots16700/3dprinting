@@ -72,12 +72,12 @@ export default function AdminDashboard() {
 							<div className="flex w-full">
 								<div className="w-full">
 									<span className="font-light text-gray-200">Name: </span>
-									<span className="font-semibold">{order.username}</span>
+									<span className="font-semibold">{order.user.name}</span>
 								</div>
 								<div className="w-full">
 									<span className="font-light text-gray-200">Email: </span>
-									<Link href={`mailto:${order.email}`} target="_blank" className="font-semibold">
-										{order.email}
+									<Link href={`mailto:${order.user.email}`} target="_blank" className="font-semibold">
+										{order.user.email}
 									</Link>
 								</div>
 							</div>
