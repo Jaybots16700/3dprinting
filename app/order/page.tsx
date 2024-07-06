@@ -70,7 +70,7 @@ export default function Order() {
 					</label>
 				</div>
 
-				<div className="mb-8 mt-12 h-px w-full bg-gradient-to-l from-transparent via-blue-500 to-transparent" />
+				<Divider className="mb-8 mt-12" />
 
 				<div className="group relative z-0 mb-5 w-full">
 					<input
@@ -142,6 +142,8 @@ export default function Order() {
 					<label htmlFor="timelapse">Add a timelapse? (+$2)</label>
 				</div>
 
+				<Divider className="my-6" />
+
 				<button
 					type="submit"
 					className="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-800 sm:w-auto">
@@ -150,4 +152,8 @@ export default function Order() {
 			</form>
 		</div>
 	);
+}
+
+function Divider({ className }: { className?: string }) {
+	return <div className={`h-px w-full bg-gradient-to-l from-transparent via-blue-500 to-transparent ${className}`} />;
 }
