@@ -4,8 +4,11 @@ import { pricePerGram } from "@/lib/constants";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
+import { useRouter } from "next/navigation";
 
 export default function Order() {
+	const router = useRouter();
+
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
@@ -110,7 +113,6 @@ export default function Order() {
 						onChange={(e) => setPurpose(e.target.value)}
 						className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
 						placeholder=" "
-						required
 					/>
 					<label
 						htmlFor="purpose"
@@ -127,7 +129,6 @@ export default function Order() {
 						onChange={(e) => setOther(e.target.value)}
 						className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
 						placeholder=" "
-						required
 					/>
 					<label
 						htmlFor="purpose"
@@ -150,7 +151,11 @@ export default function Order() {
 
 				<button
 					type="submit"
-					className="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-800 sm:w-auto">
+					className="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-800 sm:w-auto"
+					onClick={() => {
+						// store info
+						router.push(`/order/success/${"id_of_some_sort"}`);
+					}}>
 					Submit
 				</button>
 			</form>
