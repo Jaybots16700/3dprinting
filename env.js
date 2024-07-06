@@ -8,7 +8,10 @@ const { z } = require("zod");
 /* eslint sort-keys: "error" */
 const envSchema = z.object({
 	DISCORD_WEBHOOK: z.string().url(),
+	GOOGLE_CLIENT_ID: z.string(),
+	GOOGLE_CLIENT_SECRET: z.string(),
 	MONGODB_URI: z.string(),
+	NEXTAUTH_SECRET: z.string(),
 	NODE_ENV: z.enum(["development", "test", "production"]),
 	URL: z.string().url(),
 });

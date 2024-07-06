@@ -11,8 +11,7 @@ import { Timestamp } from "mongodb";
 export default function Order() {
 	const router = useRouter();
 
-	const [firstName, setFirstName] = useState("");
-	const [lastName, setLastName] = useState("");
+	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [partName, setPartName] = useState("");
 	const [driveLink, setDriveLink] = useState("");
@@ -28,39 +27,21 @@ export default function Order() {
 			<form className="mx-auto mt-12 w-full max-w-lg rounded-2xl border border-slate-800 bg-black p-8">
 				<div className="mb-4 w-full text-center text-xl text-sky-500">Personal Information</div>
 
-				<div className="grid md:grid-cols-2 md:gap-6">
-					<div className="group relative z-0 mb-5 w-full">
-						<input
-							type="text"
-							name="first_name"
-							value={firstName}
-							onChange={(e) => setFirstName(e.target.value)}
-							className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
-							placeholder=" "
-							required
-						/>
-						<label
-							htmlFor="first_name"
-							className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:translate-x-1/4">
-							First name
-						</label>
-					</div>
-					<div className="group relative z-0 mb-5 w-full">
-						<input
-							type="text"
-							name="last_name"
-							value={lastName}
-							onChange={(e) => setLastName(e.target.value)}
-							className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
-							placeholder=" "
-							required
-						/>
-						<label
-							htmlFor="last_name"
-							className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:translate-x-1/4">
-							Last name
-						</label>
-					</div>
+				<div className="group relative z-0 mb-5 w-full">
+					<input
+						type="text"
+						name="first_name"
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}
+						className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
+						placeholder=" "
+						required
+					/>
+					<label
+						htmlFor="first_name"
+						className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:translate-x-1/4">
+						Name
+					</label>
 				</div>
 				<div className="group relative z-0 mb-5 w-full">
 					<input
@@ -172,9 +153,8 @@ export default function Order() {
 					onClick={async (e) => {
 						e.preventDefault();
 						const orderId = await addOrder({
-							name: partName,
-							firstName,
-							lastName,
+							partName,
+							username,
 							email,
 							link: driveLink,
 							purpose,

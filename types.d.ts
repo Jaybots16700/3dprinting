@@ -8,9 +8,8 @@ declare global {
 export type OrderStatus = "received" | "queued" | "printing" | "awaiting payment" | "completed" | "delivered";
 
 export interface PartOrder {
-	name: string;
-	firstName: string;
-	lastName: string;
+	partName: string;
+	username: string;
 	email: string;
 	link: string;
 	purpose: string;
@@ -19,4 +18,22 @@ export interface PartOrder {
 	timestamp: Date;
 	filament?: number;
 	status: OrderStatus;
+}
+
+export interface User {
+	id: string;
+	name?: string;
+	email: string;
+	image?: string;
+	last_login?: Date;
+	isAdmin?: boolean;
+}
+
+declare module "next-auth" {
+	export interface Session {
+		user: {
+			id: string;
+			isAdmin: boolean;
+		} & DefaultSession["user"];
+	}
 }

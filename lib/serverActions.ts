@@ -22,7 +22,7 @@ export async function addOrder(order: PartOrder) {
 
 	const id = await ordersDb.insertOne(order).then((o) => o.insertedId.toString());
 
-	const { firstName, lastName, name } = order;
+	const { username, partName } = order;
 
 	await fetch(env.DISCORD_WEBHOOK, {
 		method: "POST",
@@ -34,7 +34,7 @@ export async function addOrder(order: PartOrder) {
 				{
 					url: `${env.URL}/admin/orders/${id}`,
 					title: "New Order",
-					description: `${firstName} ${lastName} placed an order for ${name}`,
+					description: `${username} placed an order for ${partName}`,
 					color: 255,
 				},
 			],
