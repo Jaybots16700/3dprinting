@@ -15,11 +15,14 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, LinkIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { WithId } from "mongodb";
-import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AdminDashboard() {
+	const openPanels = useSearchParams().getAll("open");
+	const router = useRouter();
+
 	const [orders, setOrders] = useState<WithId<PartOrder>[]>([]);
 
 	useEffect(() => {
@@ -31,7 +34,7 @@ export default function AdminDashboard() {
 			<h1 className="mb-24 text-6xl font-semibold">Admin Dashboard</h1>
 			<div className="mb-16 w-full max-w-3xl space-y-4">
 				{orders.map((order, index) => (
-					<Disclosure as="div" key={order._id.toString()}>
+					<Disclosure as="div" key={order._id.toString()} defaultOpen={openPanels.includes(order._id.toString())}>
 						<DisclosureButton className="flex h-10 w-full items-center justify-between rounded-xl border border-slate-700 bg-zinc-800 px-2 data-[open]:rounded-b-none">
 							<div className="flex items-center space-x-2 pl-1">
 								<Link href={order.link} target="_blank">
