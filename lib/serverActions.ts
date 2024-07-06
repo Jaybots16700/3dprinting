@@ -47,5 +47,11 @@ export async function addOrder(order: PartOrder) {
 export async function updateStatus(orderId: string, status: OrderStatus) {
 	const { ordersDb } = await connectToDatabase();
 
-	return ordersDb.updateOne({ _id: new ObjectId(orderId) }, { $set: { status } });
+	ordersDb.updateOne({ _id: new ObjectId(orderId) }, { $set: { status } });
+}
+
+export async function updateFilament(orderId: string, filament: number) {
+	const { ordersDb } = await connectToDatabase();
+
+	return ordersDb.updateOne({ _id: new ObjectId(orderId) }, { $set: { filament } });
 }

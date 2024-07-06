@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/badge";
 import { Divider } from "@/components/divider";
-import { getAllOrders, updateStatus } from "@/lib/serverActions";
+import { getAllOrders, updateFilament, updateStatus } from "@/lib/serverActions";
 import { PartOrder, OrderStatus } from "@/types";
 import {
 	Disclosure,
@@ -110,10 +110,10 @@ export default function AdminDashboard() {
 							<div className="flex w-full justify-between">
 								<div className="group relative z-0 mt-1 w-full">
 									<input
-										type="text"
+										type="number"
 										name="filament"
-										value={order.filament}
-										// onChange={(e) => setOther(e.target.value)}
+										defaultValue={order.filament}
+										onChange={(e) => updateFilament(order._id.toString(), e.target.valueAsNumber)}
 										className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
 										placeholder=" "
 									/>
