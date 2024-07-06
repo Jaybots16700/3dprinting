@@ -18,6 +18,6 @@ export async function connectToDatabase(dbName: string = "3dprinting") {
 	return {
 		client,
 		db,
-		classroomsDb: db.collection<PartOrder>("orders"),
+		ordersDb: db.collection<PartOrder>("orders"),
 	};
 }
