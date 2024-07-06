@@ -108,7 +108,7 @@ export default function AdminDashboard() {
 							<Divider />
 
 							<div className="flex w-full justify-between">
-								<div className="group relative z-0 mt-1 w-full">
+								<div className="group relative z-0 mt-1 w-1/3">
 									<input
 										type="number"
 										name="filament"
@@ -122,6 +122,12 @@ export default function AdminDashboard() {
 										className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4">
 										Material (g)
 									</label>
+								</div>
+
+								<div className="flex items-center">
+									<button className="rounded-lg bg-blue-900 px-4 py-2 duration-150 hover:bg-blue-800" type="button">
+										Send Payment Email
+									</button>
 								</div>
 							</div>
 						</DisclosurePanel>
