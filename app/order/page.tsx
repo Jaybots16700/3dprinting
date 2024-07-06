@@ -92,8 +92,8 @@ export default function Order() {
 						<span className="group relative">
 							<InformationCircleIcon className="inline size-5" />
 							<span className="absolute bottom-full right-0 w-max max-w-sm translate-y-2 rounded bg-gray-700 px-2 py-1 text-sm font-light text-gray-200 opacity-0 duration-150 group-hover:-translate-y-0.5 group-hover:opacity-100">
-								Upload all files into a Google Drive Folder and put the link here. Make sure it's shared with everyone
-								with the link!
+								Upload all files into a Google Drive Folder and put the link here. Make sure it&apos;s shared with
+								everyone with the link!
 							</span>
 						</span>
 					</div>
