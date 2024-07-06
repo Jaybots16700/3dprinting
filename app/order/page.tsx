@@ -88,9 +88,15 @@ export default function Order() {
 						Google Drive Link
 					</label>
 					{/* Popover? */}
-					{/* <div className="absolute bottom-2 right-1 size-5 text-gray-400">
-						<InformationCircleIcon className="right-1 size-5 text-gray-400" />
-					</div> */}
+					<div className="absolute bottom-2 right-1 size-5 text-gray-400">
+						<span className="group relative">
+							<InformationCircleIcon className="inline size-5" />
+							<span className="absolute bottom-full right-0 w-max max-w-sm translate-y-2 rounded bg-gray-700 px-2 py-1 text-sm font-light text-gray-200 opacity-0 duration-150 group-hover:-translate-y-0.5 group-hover:opacity-100">
+								Upload all files into a Google Drive Folder and put the link here. Make sure it's shared with everyone
+								with the link!
+							</span>
+						</span>
+					</div>
 				</div>
 
 				<div className="group relative z-0 mb-5 w-full">
