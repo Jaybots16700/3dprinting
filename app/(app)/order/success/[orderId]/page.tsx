@@ -10,7 +10,7 @@ export default function Success({ params }: { params: { orderId: string } }) {
 
 	useEffect(() => {
 		(async () => setOrder(await getOrder(params.orderId)))();
-	}, []);
+	}, [params.orderId]);
 
 	return (
 		<div className="flex h-full w-full flex-col items-center py-24">

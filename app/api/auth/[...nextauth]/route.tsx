@@ -11,7 +11,6 @@ const handler = (req: NextRequest, context: { params: { nextauth: string[] } }) 
 	if (req.method === "POST")
 		if (req.nextUrl.pathname + req.nextUrl.search === "/api/auth/signin?error=OAuthAccountNotLinked")
 			return redirect("/error?error=OAuthAccountNotLinked");
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	return NextAuth(req as any, context as any, authOptions);
 };
 
