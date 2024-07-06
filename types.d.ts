@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { DefaultSession } from "next-auth";
 
 declare global {
 	// eslint-disable-next-line no-var, vars-on-top
