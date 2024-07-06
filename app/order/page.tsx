@@ -5,6 +5,8 @@ import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { useRouter } from "next/navigation";
+import { addOrder } from "@/lib/serverActions";
+import { Timestamp } from "mongodb";
 
 export default function Order() {
 	const router = useRouter();
@@ -167,9 +169,21 @@ export default function Order() {
 				<button
 					type="submit"
 					className="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-800 sm:w-auto"
-					onClick={() => {
-						// store info
-						router.push(`/order/success/${"id_of_some_sort"}`);
+					onClick={async (e) => {
+						e.preventDefault();
+						const orderId = await addOrder({
+							name: partName,
+							firstName,
+							lastName,
+							email,
+							link: driveLink,
+							purpose,
+							other,
+							timelapse,
+							timestamp: new Date(),
+							status: "received",
+						});
+						router.push(`/order/success/${orderId}`);
 					}}>
 					Submit
 				</button>
