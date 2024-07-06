@@ -22,22 +22,24 @@ export async function addOrder(order: PartOrder) {
 
 	const id = await ordersDb.insertOne(order).then((o) => o.insertedId.toString());
 
-	const response = await fetch(env.DISCORD_WEBHOOK, {
+	const { firstName, lastName, name } = order;
+
+	await fetch(env.DISCORD_WEBHOOK, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({
+			avatar_url: "https://cdn.jaybots.org/logo/transparent.png",
 			username: "3D Printing Order",
 			embeds: [
 				{
+					url: `${env.URL}/admin/orders/${id}`,
 					title: "New Order",
-					description: "Hello World",
+					description: `${firstName} ${lastName} placed an order for ${name}`,
 					color: 255,
 				},
 			],
 		}),
 	});
-
-	console.log(response);
 
 	return id;
 }

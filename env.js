@@ -10,6 +10,7 @@ const envSchema = z.object({
 	DISCORD_WEBHOOK: z.string().url(),
 	MONGODB_URI: z.string(),
 	NODE_ENV: z.enum(["development", "test", "production"]),
+	URL: z.string().url(),
 });
 
 const env = envSchema.safeParse(process.env);
