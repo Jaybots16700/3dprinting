@@ -23,7 +23,7 @@ export default function Order() {
 			<h1 className="text-6xl font-semibold">Place an Order</h1>
 			<span className="mt-4 font-light text-slate-300">Pricing: ${pricePerGram} per gram</span>
 
-			<form className="mx-auto mt-12 w-full max-w-lg rounded-2xl border border-slate-800 p-8">
+			<form className="mx-auto mt-12 w-full max-w-lg rounded-2xl border border-slate-800 bg-black p-8">
 				<div className="mb-4 w-full text-center text-xl text-sky-500">Personal Information</div>
 
 				<div className="grid md:grid-cols-2 md:gap-6">

@@ -5,7 +5,10 @@ declare global {
 	var mongoClientPromise: Promise<MongoClient>;
 }
 
+export type OrderStatus = "received" | "queued" | "printing" | "awaiting payment" | "completed" | "delivered";
+
 export interface PartOrder {
+	name: string;
 	firstName: string;
 	lastName: string;
 	email: string;
@@ -15,5 +18,5 @@ export interface PartOrder {
 	timelapse: boolean;
 	timestamp: Date;
 	filament?: number;
-	status: "received" | "queued" | "printing" | "awaiting payment" | "completed" | "delivered";
+	status: OrderStatus;
 }

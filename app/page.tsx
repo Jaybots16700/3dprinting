@@ -1,5 +1,6 @@
 "use client";
 
+import { badgeStyles } from "@/lib/constants";
 import { getAllOrders } from "@/lib/serverActions";
 import { PartOrder } from "@/types";
 import { ArrowLongRightIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
@@ -21,8 +22,11 @@ export default function Home() {
 				{orders.map((order) => (
 					<div
 						key={order.link}
-						className="flex h-10 w-full items-center rounded-lg border border-slate-700 bg-zinc-800 px-4">
-						{order.firstName} {order.lastName}
+						className="flex h-10 w-full items-center justify-between rounded-xl border border-slate-700 bg-zinc-800 px-4 pr-2">
+						{order.name}
+						<span className={`rounded px-2.5 py-0.5 text-xs font-medium ${badgeStyles[order.status]}`}>
+							{order.status.substring(0, 1).toUpperCase() + order.status.substring(1)}
+						</span>
 					</div>
 				))}
 			</div>
