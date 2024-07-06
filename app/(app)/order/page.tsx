@@ -25,7 +25,25 @@ export default function Order() {
 			<h1 className="text-6xl font-semibold">Place an Order</h1>
 			<span className="mt-4 font-light text-slate-300">Pricing: ${pricePerGram} per gram</span>
 
-			<form className="mx-auto mt-12 w-full max-w-lg rounded-2xl border border-slate-800 bg-black p-8">
+			<form
+				className="mx-auto mt-12 w-full max-w-lg rounded-2xl border border-slate-800 bg-black p-8"
+				onSubmit={async (e) => {
+					e.preventDefault();
+					const orderId = await addOrder({
+						partName,
+						user: {
+							name: username,
+							email,
+						},
+						link: driveLink,
+						purpose,
+						other,
+						timelapse,
+						timestamp: new Date(),
+						status: "received",
+					});
+					router.push(`/order/success/${orderId}`);
+				}}>
 				<div className="mb-4 w-full text-center text-xl text-sky-500">Personal Information</div>
 
 				<div className="group relative z-0 mb-5 w-full">
@@ -150,24 +168,7 @@ export default function Order() {
 				<Divider className="my-6" />
 				<button
 					type="submit"
-					className="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-800 sm:w-auto"
-					onClick={async (e) => {
-						e.preventDefault();
-						const orderId = await addOrder({
-							partName,
-							user: {
-								name: username,
-								email,
-							},
-							link: driveLink,
-							purpose,
-							other,
-							timelapse,
-							timestamp: new Date(),
-							status: "received",
-						});
-						router.push(`/order/success/${orderId}`);
-					}}>
+					className="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-800 sm:w-auto">
 					Submit
 				</button>
 			</form>
