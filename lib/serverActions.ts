@@ -18,7 +18,7 @@ export async function getOrder(orderId: string) {
 }
 
 export async function addOrder(order: PartOrder) {
-	const { ordersDb, usersDb } = await connectToDatabase();
+	const { ordersDb } = await connectToDatabase();
 
 	const id = await ordersDb.insertOne(order).then((o) => o.insertedId.toString());
 
@@ -32,7 +32,7 @@ export async function addOrder(order: PartOrder) {
 			username: "3D Printing Order",
 			embeds: [
 				{
-					url: `${env.URL}/admin/orders/${id}`,
+					url: `${env.URL}/admin?open=${id}`,
 					title: "New Order",
 					description: `${user} placed an order for ${partName}`,
 					color: 255,
