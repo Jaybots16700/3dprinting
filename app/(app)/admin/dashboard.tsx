@@ -1,13 +1,14 @@
 "use client";
 
 import { Badge } from "@/components/badge";
-import { getAllOrders } from "@/lib/serverActions";
+import { getAllOrders, updateStatus } from "@/lib/serverActions";
 import { PartOrder, OrderStatus } from "@/types";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
+import { WithId } from "mongodb";
 import { useEffect, useState } from "react";
 
 export default function AdminDashboard() {
-	const [orders, setOrders] = useState<PartOrder[]>([]);
+	const [orders, setOrders] = useState<WithId<PartOrder>[]>([]);
 
 	useEffect(() => {
 		(async () => setOrders(await getAllOrders()))();
@@ -22,7 +23,16 @@ export default function AdminDashboard() {
 						key={order.link}
 						className="flex h-10 w-full items-center justify-between rounded-xl border border-slate-700 bg-zinc-800 px-4 pr-2">
 						<span>{order.partName}</span>
-						<Listbox value={order.status}>
+						<Listbox
+							value={order.status}
+							onChange={async (newStatus) => {
+								await updateStatus(order._id.toString(), newStatus);
+								setOrders((prev) => [
+									...prev.slice(0, index),
+									{ ...prev[index], status: newStatus },
+									...prev.slice(index + 1),
+								]);
+							}}>
 							<ListboxButton className="flex outline-none">
 								<Badge status={order.status} />
 							</ListboxButton>

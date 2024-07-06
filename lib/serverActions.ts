@@ -1,6 +1,6 @@
 "use server";
 
-import { PartOrder } from "@/types";
+import { OrderStatus, PartOrder } from "@/types";
 import { connectToDatabase } from "./mongodb";
 import { ObjectId } from "mongodb";
 import { env } from "@/env";
@@ -42,4 +42,10 @@ export async function addOrder(order: PartOrder) {
 	});
 
 	return id;
+}
+
+export async function updateStatus(orderId: string, status: OrderStatus) {
+	const { ordersDb } = await connectToDatabase();
+
+	return ordersDb.updateOne({ _id: new ObjectId(orderId) }, { $set: { status } });
 }
