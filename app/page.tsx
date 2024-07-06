@@ -1,11 +1,19 @@
 "use client";
 
-import { badgeStyles } from "@/lib/constants";
 import { getAllOrders } from "@/lib/serverActions";
-import { PartOrder } from "@/types";
-import { ArrowLongRightIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
+import type { OrderStatus, PartOrder } from "@/types";
+import { ArrowLongRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
+const badgeStyles = {
+	received: " bg-blue-900 text-blue-300",
+	queued: " bg-red-900 text-red-300",
+	printing: " bg-purple-900 text-purple-300",
+	delivered: " bg-green-900 text-green-300",
+	completed: " bg-yellow-900 text-yellow-300",
+	"awaiting payment": " bg-orange-900 text-orange-300",
+} satisfies { [key in OrderStatus]: string };
 
 export default function Home() {
 	const [orders, setOrders] = useState<PartOrder[]>([]);
@@ -23,7 +31,7 @@ export default function Home() {
 					<div
 						key={order.link}
 						className="flex h-10 w-full items-center justify-between rounded-xl border border-slate-700 bg-zinc-800 px-4 pr-2">
-						{order.name}
+						<span>{order.partName}</span>
 						<span className={`rounded px-2.5 py-0.5 text-xs font-medium ${badgeStyles[order.status]}`}>
 							{order.status.substring(0, 1).toUpperCase() + order.status.substring(1)}
 						</span>
