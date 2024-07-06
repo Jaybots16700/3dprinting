@@ -1,3 +1,10 @@
+import { MongoClient } from "mongodb";
+
+declare global {
+	// eslint-disable-next-line no-var, vars-on-top
+	var mongoClientPromise: Promise<MongoClient>;
+}
+
 export interface PartOrder {
 	firstName: string;
 	lastName: string;
