@@ -1,7 +1,81 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { Badge } from "@/components/badge";
+import { Divider } from "@/components/divider";
+import { getOrder } from "@/lib/serverActions";
+import { PartOrder } from "@/types";
+import { CheckIcon, LinkIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Order({ params }: { params: { orderId: string } }) {
-	const { status } = useSession();
+	const [order, setOrder] = useState<PartOrder | null>(null);
+
+	useEffect(() => {
+		(async () => setOrder(await getOrder(params.orderId)))();
+	}, [params.orderId]);
+
+	if (!order) return <></>;
+
+	return (
+		<div className="flex h-full w-full flex-col items-center py-24">
+			<div className="w-full max-w-3xl">
+				<div className="flex h-10 w-full items-center justify-between rounded-xl rounded-b-none border border-slate-700 bg-zinc-800 px-2">
+					<div className="flex items-center space-x-2 pl-1">
+						<Link href={order.link} target="_blank">
+							<LinkIcon className="size-4 text-gray-400 duration-150 hover:text-white" />
+						</Link>
+						<span>{order.partName}</span>
+					</div>
+					<div className="flex outline-none">
+						<Badge status={order.status} />
+					</div>
+				</div>
+				<div className="space-y-4 rounded-b-xl border border-t-0 border-slate-700 bg-zinc-800 p-4">
+					<div className="flex w-full justify-between">
+						<span className="inline">
+							{"image" in order.user && (
+								<img
+									src={order.user.image}
+									className="mr-2 inline size-6 rounded-full"
+									alt="Profile Picture"
+									height={24}
+									width={24}
+									referrerPolicy="no-referrer"
+								/>
+							)}
+							{order.user.name}
+						</span>
+
+						<Link href={`mailto:${order.user.email}`} target="_blank">
+							{order.user.email}
+						</Link>
+					</div>
+
+					<Divider />
+
+					<div className="w-full space-y-2">
+						<div className="">
+							<span className="font-light text-gray-200">Purpose: </span>
+							<span className="font-semibold">{order.purpose}</span>
+						</div>
+
+						<div className="">
+							<span className="font-light text-gray-200">Other: </span>
+							<span className="font-semibold">{order.other}</span>
+						</div>
+
+						<div className="">
+							<span className="font-light text-gray-200">Timelapse: </span>
+							{order.timelapse ? (
+								<CheckIcon className="inline size-4 text-green-600" />
+							) : (
+								<XMarkIcon className="inline size-4 text-red-500" />
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }

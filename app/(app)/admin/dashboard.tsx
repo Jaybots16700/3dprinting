@@ -95,12 +95,10 @@ export default function AdminDashboard() {
 									<span className="font-light text-gray-200">Purpose: </span>
 									<span className="font-semibold">{order.purpose}</span>
 								</div>
-								{order.other && (
-									<div className="">
-										<span className="font-light text-gray-200">Other: </span>
-										<span className="font-semibold">{order.other}</span>
-									</div>
-								)}
+								<div className="">
+									<span className="font-light text-gray-200">Other: </span>
+									<span className="font-semibold">{order.other}</span>
+								</div>
 								<div className="">
 									<span className="font-light text-gray-200">Timelapse: </span>
 									{order.timelapse ? (
