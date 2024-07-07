@@ -3,6 +3,7 @@
 import { pricePerGram } from "@/lib/constants";
 import { getOrder } from "@/lib/serverActions";
 import { PartOrder } from "@/types";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Success({ params }: { params: { orderId: string } }) {
@@ -20,6 +21,10 @@ export default function Success({ params }: { params: { orderId: string } }) {
 				{order?.timelapse ? " + $2 for the timelapse" : ""}) and payment/delivery information to {order?.user.email}. We
 				will reach out with any questions about your order.
 			</p>
+
+			<Link href={`/orders/${params.orderId}`} className="mt-12 rounded-lg bg-blue-700 px-4 py-2 hover:bg-blue-600">
+				View your order!
+			</Link>
 		</div>
 	);
 }

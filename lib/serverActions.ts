@@ -14,7 +14,7 @@ const fromEmail = "matthew@matthewglasser.org";
 export async function getAllOrders() {
 	const { ordersDb } = await connectToDatabase();
 
-	return ordersDb.find().toArray();
+	return await ordersDb.find().toArray();
 }
 
 export async function getOrder(orderId: string) {
