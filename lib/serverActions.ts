@@ -7,6 +7,8 @@ import { env } from "@/env";
 import { Resend } from "resend";
 import OrderReceived from "@/components/emails/orderReceived";
 import PaymentEmail from "@/components/emails/payment";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth";
 
 const resend = new Resend(env.RESEND_API_KEY);
 const fromEmail = "matthew@matthewglasser.org";
@@ -19,8 +21,11 @@ export async function getAllOrders() {
 
 export async function getOrder(orderId: string) {
 	const { ordersDb } = await connectToDatabase();
+	const session = await getServerSession(authOptions);
 
-	return ordersDb.findOne({ _id: new ObjectId(orderId) });
+	if (session?.user.isAdmin) return ordersDb.findOne({ _id: new ObjectId(orderId) });
+
+	return ordersDb.findOne({ _id: new ObjectId(orderId), "user.email": session?.user.email });
 }
 
 export async function addOrder(order: PartOrder) {

@@ -5,18 +5,24 @@ import { Divider } from "@/components/divider";
 import { getOrder } from "@/lib/serverActions";
 import { PartOrder } from "@/types";
 import { CheckIcon, LinkIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Order({ params }: { params: { orderId: string } }) {
 	const { orderId } = params;
+	const { status } = useSession();
+	const router = useRouter();
+	const path = usePathname();
 
 	const [order, setOrder] = useState<PartOrder | null>(null);
 
 	useEffect(() => {
-		(async () => setOrder(await getOrder(params.orderId)))();
-	}, [params.orderId]);
+		(async () => setOrder(await getOrder(orderId)))();
+	}, [orderId]);
 
+	if (status === "unauthenticated") return router.push(`/signin?redirect=${path}`);
 	if (!order) return <></>;
 
 	return (
