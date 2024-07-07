@@ -13,7 +13,7 @@ export interface PartOrder {
 	user: { name: string; email: string } | User;
 	link: string;
 	purpose: string;
-	other?: string;
+	other: string;
 	timelapse: boolean;
 	timestamp: Date;
 	filament?: number;

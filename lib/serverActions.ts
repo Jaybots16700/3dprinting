@@ -51,7 +51,7 @@ export async function addOrder(order: PartOrder) {
 		from: fromEmail,
 		to: user.email,
 		subject: "Order Received!",
-		react: OrderReceived(order),
+		react: OrderReceived(order, id),
 	});
 
 	return id;
