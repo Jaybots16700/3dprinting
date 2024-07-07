@@ -9,6 +9,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Order({ params }: { params: { orderId: string } }) {
+	const { orderId } = params;
+
 	const [order, setOrder] = useState<PartOrder | null>(null);
 
 	useEffect(() => {
@@ -19,6 +21,7 @@ export default function Order({ params }: { params: { orderId: string } }) {
 
 	return (
 		<div className="flex h-full w-full flex-col items-center py-24">
+			<h1 className="mb-24 text-6xl font-semibold">{order.partName}</h1>
 			<div className="w-full max-w-3xl">
 				<div className="flex h-10 w-full items-center justify-between rounded-xl rounded-b-none border border-slate-700 bg-zinc-800 px-2">
 					<div className="flex items-center space-x-2 pl-1">
@@ -106,6 +109,9 @@ export default function Order({ params }: { params: { orderId: string } }) {
 					</div>
 				</div>
 			</div>
+			<Link href={`/order/${orderId}/edit`} className="mt-12 rounded-lg bg-blue-700 px-4 py-2 hover:bg-blue-600">
+				Edit
+			</Link>
 		</div>
 	);
 }
