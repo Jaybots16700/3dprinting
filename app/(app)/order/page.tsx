@@ -23,7 +23,10 @@ export default function Order() {
 	const [other, setOther] = useState("");
 	const [timelapse, setTimelapse] = useState(false);
 
-	const [delivery, setDelivery] = useState<Delivery>({ school: true, room: "", period: 1 });
+	const [school, setSchool] = useState(true);
+	const [period, setPeriod] = useState(1);
+	const [room, setRoom] = useState("");
+	const [location, setLocation] = useState("");
 
 	useEffect(() => {
 		session?.user.name && setUsername(session.user.name);
@@ -51,7 +54,7 @@ export default function Order() {
 						timelapse,
 						timestamp: new Date(),
 						status: "received",
-						delivery,
+						delivery: school ? { school, period, room } : { school, location },
 					});
 					router.push(`/order/${orderId}/success`);
 				}}>
@@ -181,9 +184,62 @@ export default function Order() {
 				<div className="mb-4 w-full text-center text-xl text-sky-500">Delivery Information</div>
 
 				<div className="group relative z-0 mb-5 flex w-full items-center space-x-2 text-sm text-gray-400">
-					<input type="checkbox" name="school" checked={timelapse} onChange={(e) => setTimelapse(e.target.checked)} />
+					<input type="checkbox" name="school" checked={school} onChange={(e) => setSchool(e.target.checked)} />
 					<label htmlFor="school">Can we deliver it at school?</label>
 				</div>
+				{school ? (
+					<>
+						<div className="group relative z-0 mb-5 w-full">
+							<input
+								type="text"
+								name="room"
+								value={room}
+								onChange={(e) => setRoom(e.target.value)}
+								className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
+								placeholder=" "
+								required
+							/>
+							<label
+								htmlFor="room"
+								className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4">
+								What room?<span className="text-red-500"> *</span>
+							</label>
+						</div>
+						<div className="group relative z-0 mb-5 w-full">
+							<input
+								type="number"
+								name="period"
+								value={period}
+								onChange={(e) => setPeriod(e.target.valueAsNumber < 1 ? 1 : Math.min(e.target.valueAsNumber, 8))}
+								className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
+								placeholder=" "
+								required
+							/>
+							<label
+								htmlFor="period"
+								className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4">
+								What period?<span className="text-red-500"> *</span>
+							</label>
+						</div>
+					</>
+				) : (
+					<div className="group relative z-0 mb-5 w-full">
+						<input
+							type="text"
+							name="location"
+							value={location}
+							onChange={(e) => setLocation(e.target.value)}
+							className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
+							placeholder=" "
+							required
+						/>
+						<label
+							htmlFor="location"
+							className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4">
+							When & where?<span className="text-red-500"> *</span>
+						</label>
+					</div>
+				)}
 
 				<Divider className="my-6" />
 
