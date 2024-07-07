@@ -24,7 +24,7 @@ export default function Order() {
 	const [timelapse, setTimelapse] = useState(false);
 
 	const [school, setSchool] = useState(true);
-	const [period, setPeriod] = useState(1);
+	const [period, setPeriod] = useState<undefined | number>(undefined);
 	const [room, setRoom] = useState("");
 	const [location, setLocation] = useState("");
 
@@ -54,7 +54,7 @@ export default function Order() {
 						timelapse,
 						timestamp: new Date(),
 						status: "received",
-						delivery: school ? { school, period, room } : { school, location },
+						delivery: school ? { school, period: period as number, room } : { school, location },
 					});
 					router.push(`/order/${orderId}/success`);
 				}}>
