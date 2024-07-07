@@ -13,6 +13,7 @@ const envSchema = z.object({
 	MONGODB_URI: z.string(),
 	NEXTAUTH_SECRET: z.string(),
 	NODE_ENV: z.enum(["development", "test", "production"]),
+	RESEND_API_KEY: z.string(),
 	URL: z.string().url(),
 });
 

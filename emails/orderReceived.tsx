@@ -1,7 +1,9 @@
-import { Button, Container, Head, Heading, Html, Text, Img, Preview, Section } from "@react-email/components";
+import { pricePerGram } from "@/lib/constants";
+import { PartOrder } from "@/types";
+import { Container, Head, Heading, Html, Text, Img, Preview, Section } from "@react-email/components";
 import * as React from "react";
 
-export default function OrderReceived() {
+export default function OrderReceived(order: PartOrder) {
 	const logoStyles = {
 		display: "block",
 		margin: "0 auto",
@@ -55,8 +57,13 @@ export default function OrderReceived() {
 					</Section>
 					<Section>
 						<Heading style={headingStyles}>Thank you for Ordering!</Heading>
-						<Text style={textStyles}>Hello, [Name]</Text>
-						<Text style={textStyles}>We have received your order and will get back to you soon!</Text>
+						<Text style={textStyles}>Hello, {order.user.name} </Text>
+						<Text style={textStyles}>
+							We have received your order for {order.partName} and will get back to you in the next few days with the
+							price (${pricePerGram} per gram
+							{order?.timelapse ? " + $2 for the timelapse" : ""}) and payment/delivery information. We will reach out
+							with any questions about your order.
+						</Text>
 					</Section>
 				</Container>
 			</Section>

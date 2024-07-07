@@ -4,6 +4,10 @@ import { OrderStatus, PartOrder } from "@/types";
 import { connectToDatabase } from "./mongodb";
 import { ObjectId } from "mongodb";
 import { env } from "@/env";
+import { Resend } from "resend";
+import OrderReceived from "@/emails/orderReceived";
+
+const resend = new Resend(env.RESEND_API_KEY);
 
 export async function getAllOrders() {
 	const { ordersDb } = await connectToDatabase();
@@ -39,6 +43,13 @@ export async function addOrder(order: PartOrder) {
 				},
 			],
 		}),
+	});
+
+	await resend.emails.send({
+		from: "matthew@matthewglasser.org",
+		to: user.email,
+		subject: "Order Received!",
+		react: OrderReceived(order),
 	});
 
 	return id;
