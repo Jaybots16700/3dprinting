@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { addOrder } from "@/lib/serverActions";
 import { Divider } from "@/components/divider";
 import { useSession } from "next-auth/react";
+import { Delivery } from "@/types";
 
 export default function Order() {
 	const { data: session } = useSession();
@@ -21,6 +22,8 @@ export default function Order() {
 	const [purpose, setPurpose] = useState("");
 	const [other, setOther] = useState("");
 	const [timelapse, setTimelapse] = useState(false);
+
+	const [delivery, setDelivery] = useState<Delivery>({ school: true, room: "", period: 1 });
 
 	useEffect(() => {
 		session?.user.name && setUsername(session.user.name);
@@ -48,6 +51,7 @@ export default function Order() {
 						timelapse,
 						timestamp: new Date(),
 						status: "received",
+						delivery,
 					});
 					router.push(`/order/${orderId}/success`);
 				}}>
@@ -172,7 +176,17 @@ export default function Order() {
 					/>
 					<label htmlFor="timelapse">Add a timelapse? (+$2)</label>
 				</div>
+
+				<Divider className="mb-6 mt-12" />
+				<div className="mb-4 w-full text-center text-xl text-sky-500">Delivery Information</div>
+
+				<div className="group relative z-0 mb-5 flex w-full items-center space-x-2 text-sm text-gray-400">
+					<input type="checkbox" name="school" checked={timelapse} onChange={(e) => setTimelapse(e.target.checked)} />
+					<label htmlFor="school">Can we deliver it at school?</label>
+				</div>
+
 				<Divider className="my-6" />
+
 				<button
 					type="submit"
 					className="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-800 sm:w-auto">

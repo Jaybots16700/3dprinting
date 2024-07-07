@@ -8,6 +8,19 @@ declare global {
 
 export type OrderStatus = "received" | "queued" | "printing" | "awaiting payment" | "completed" | "delivered";
 
+export interface InSchoolDelivery {
+	school: true;
+	period: number;
+	room: string;
+}
+
+export interface OutOfSchoolDelivery {
+	school: false;
+	location: string;
+}
+
+export type Delivery = InSchoolDelivery | OutOfSchoolDelivery;
+
 export interface PartOrder {
 	partName: string;
 	user: { name: string; email: string } | User;
@@ -18,6 +31,7 @@ export interface PartOrder {
 	timestamp: Date;
 	filament?: number;
 	status: OrderStatus;
+	delivery: Delivery;
 }
 
 export interface User {
