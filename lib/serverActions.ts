@@ -5,7 +5,7 @@ import { connectToDatabase } from "./mongodb";
 import { ObjectId } from "mongodb";
 import { env } from "@/env";
 import { Resend } from "resend";
-import OrderReceived from "@/emails/orderReceived";
+import OrderReceived from "@/components/emails/orderReceived";
 
 const resend = new Resend(env.RESEND_API_KEY);
 

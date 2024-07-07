@@ -57,7 +57,7 @@ export default function OrderReceived(order: PartOrder) {
 					</Section>
 					<Section>
 						<Heading style={headingStyles}>Thank you for Ordering!</Heading>
-						<Text style={textStyles}>Hello, {order.user.name} </Text>
+						<Text style={textStyles}>Hello {order.user.name},</Text>
 						<Text style={textStyles}>
 							We have received your order for {order.partName} and will get back to you in the next few days with the
 							price (${pricePerGram} per gram
