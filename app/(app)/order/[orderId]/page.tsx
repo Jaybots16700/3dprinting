@@ -153,7 +153,7 @@ export default function Order({ params }: { params: { orderId: string } }) {
 				</div>
 			</div>
 			{session?.user.email === order.user.email && (
-				<Link href={`/order/${orderId}/edit`} className="mt-12 rounded-lg bg-blue-700 px-4 py-2 hover:bg-blue-600">
+				<Link href={`/order/${orderId}/edit`} className="mt-12 rounded-lg bg-blue-900 px-4 py-2 hover:bg-blue-800">
 					Edit
 				</Link>
 			)}
