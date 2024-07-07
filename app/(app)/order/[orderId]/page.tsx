@@ -2,8 +2,9 @@
 
 import { Badge } from "@/components/badge";
 import { Divider } from "@/components/divider";
-import { getOrder, sendPaymentEmail, updateFilament } from "@/lib/serverActions";
-import { PartOrder } from "@/types";
+import { getOrder, sendPaymentEmail, updateFilament, updateStatus } from "@/lib/serverActions";
+import { OrderStatus, PartOrder } from "@/types";
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
 import { CheckIcon, LinkIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -36,9 +37,37 @@ export default function Order({ params }: { params: { orderId: string } }) {
 						</Link>
 						<span>{order.partName}</span>
 					</div>
-					<div className="flex outline-none">
-						<Badge status={order.status} />
-					</div>
+					{session?.user.isAdmin ? (
+						<Listbox
+							value={order.status}
+							onChange={async (newStatus) => {
+								await updateStatus(orderId, newStatus);
+								setOrder((prev) => (prev ? { ...prev, status: newStatus } : null));
+							}}>
+							<ListboxButton className="flex outline-none">
+								<Badge status={order.status} />
+							</ListboxButton>
+							<ListboxOptions
+								anchor="bottom"
+								transition
+								className="flex translate-y-1 flex-col items-center space-y-1 rounded-xl border border-zinc-700 bg-zinc-800 p-2 transition duration-150 ease-in [--anchor-gap:var(--spacing-1)] focus:outline-none data-[leave]:data-[closed]:opacity-0">
+								{["received", "queued", "printing", "awaiting payment", "completed", "delivered"]
+									.filter((s) => s !== order.status)
+									.map((status) => (
+										<ListboxOption
+											key={status}
+											value={status}
+											className="flex w-full cursor-pointer items-center justify-center rounded p-1 duration-150 hover:bg-zinc-700/50">
+											<Badge status={status as OrderStatus} />
+										</ListboxOption>
+									))}
+							</ListboxOptions>
+						</Listbox>
+					) : (
+						<div className="flex outline-none">
+							<Badge status={order.status} />
+						</div>
+					)}
 				</div>
 				<div className="space-y-4 rounded-b-xl border border-t-0 border-slate-700 bg-zinc-800 p-4">
 					<div className="flex w-full justify-between">
