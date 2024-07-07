@@ -21,13 +21,17 @@ import { useEffect, useState } from "react";
 
 export default function AdminDashboard() {
 	const openPanels = useSearchParams().getAll("open");
-	const router = useRouter();
 
 	const [orders, setOrders] = useState<WithId<PartOrder>[]>([]);
 
 	useEffect(() => {
 		(async () => setOrders(await getAllOrders()))();
 	}, []);
+
+	const changeStatus = async (newStatus: OrderStatus, index: number, order: WithId<PartOrder>) => {
+		await updateStatus(order._id.toString(), newStatus);
+		setOrders((prev) => [...prev.slice(0, index), { ...prev[index], status: newStatus }, ...prev.slice(index + 1)]);
+	};
 
 	return (
 		<div className="flex flex-col items-center justify-between p-24">
@@ -42,16 +46,7 @@ export default function AdminDashboard() {
 								</Link>
 								<span>{order.partName}</span>
 							</div>
-							<Listbox
-								value={order.status}
-								onChange={async (newStatus) => {
-									await updateStatus(order._id.toString(), newStatus);
-									setOrders((prev) => [
-										...prev.slice(0, index),
-										{ ...prev[index], status: newStatus },
-										...prev.slice(index + 1),
-									]);
-								}}>
+							<Listbox value={order.status} onChange={(newStatus) => changeStatus(newStatus, index, order)}>
 								<ListboxButton className="flex outline-none">
 									<Badge status={order.status} />
 								</ListboxButton>
@@ -118,7 +113,14 @@ export default function AdminDashboard() {
 
 							<Divider />
 
-							<div className="flex w-full justify-between">
+							<form
+								className="flex w-full justify-between"
+								onSubmit={async (e) => {
+									e.preventDefault();
+									await sendPaymentEmail(order);
+
+									changeStatus("awaiting payment", index, order);
+								}}>
 								<div className="group relative z-0 mt-1 w-1/3">
 									<input
 										type="number"
@@ -127,6 +129,7 @@ export default function AdminDashboard() {
 										onChange={(e) => updateFilament(order._id.toString(), e.target.valueAsNumber)}
 										className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
 										placeholder=" "
+										required
 									/>
 									<label
 										htmlFor="filament"
@@ -136,14 +139,11 @@ export default function AdminDashboard() {
 								</div>
 
 								<div className="flex items-center">
-									<button
-										type="button"
-										className="rounded-lg bg-blue-900 px-4 py-2 duration-150 hover:bg-blue-800"
-										onClick={() => order.filament && sendPaymentEmail(order)}>
+									<button type="submit" className="rounded-lg bg-blue-900 px-4 py-2 duration-150 hover:bg-blue-800">
 										Send Payment Email
 									</button>
 								</div>
-							</div>
+							</form>
 						</DisclosurePanel>
 					</Disclosure>
 				))}
