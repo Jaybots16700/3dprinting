@@ -5,7 +5,7 @@ import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { usePathname, useRouter } from "next/navigation";
-import { addOrder, getOrder } from "@/lib/serverActions";
+import { addOrder, getOrder, updateOrder } from "@/lib/serverActions";
 import { Divider } from "@/components/divider";
 import { useSession } from "next-auth/react";
 import { Delivery, PartOrder } from "@/types";
@@ -67,7 +67,7 @@ export default function Edit({ params }: { params: { orderId: string } }) {
 				className="mx-auto mt-12 w-full max-w-lg rounded-2xl border border-slate-800 bg-black p-8"
 				onSubmit={async (e) => {
 					e.preventDefault();
-					const orderId = await addOrder({
+					await updateOrder(orderId, {
 						partName,
 						user: {
 							name: username,
@@ -81,7 +81,7 @@ export default function Edit({ params }: { params: { orderId: string } }) {
 						status: "received",
 						delivery: school ? { school, period: period as number, room } : { school, location },
 					});
-					router.push(`/order/${orderId}/success`);
+					router.push(`/order/${orderId}`);
 				}}>
 				<div className="mb-4 w-full text-center text-xl text-sky-500">Personal Information</div>
 

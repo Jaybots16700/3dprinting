@@ -9,6 +9,7 @@ import OrderReceived from "@/components/emails/orderReceived";
 import PaymentEmail from "@/components/emails/payment";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth";
+import OrderUpdated from "@/components/emails/orderUpdated";
 
 const resend = new Resend(env.RESEND_API_KEY);
 const fromEmail = "matthew@matthewglasser.org";
@@ -57,6 +58,42 @@ export async function addOrder(order: PartOrder) {
 		to: user.email,
 		subject: "Order Received!",
 		react: OrderReceived(order, id),
+	});
+
+	return id;
+}
+
+export async function updateOrder(orderId: string, order: PartOrder) {
+	const { ordersDb } = await connectToDatabase();
+
+	const id = (await ordersDb
+		.updateOne({ _id: new ObjectId(orderId) }, { $set: order })
+		.then((o) => o.upsertedId?.toString())) as string;
+
+	const { user, partName } = order;
+
+	await fetch(env.DISCORD_WEBHOOK, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({
+			avatar_url: "https://cdn.jaybots.org/logo/transparent.png",
+			username: "3D Printing Order",
+			embeds: [
+				{
+					url: `${env.URL}/admin?open=${id}`,
+					title: "Updated Order",
+					description: `${user.name} updated their order for ${partName}`,
+					color: 255,
+				},
+			],
+		}),
+	});
+
+	await resend.emails.send({
+		from: fromEmail,
+		to: user.email,
+		subject: "Order Updated!",
+		react: OrderUpdated(order, id),
 	});
 
 	return id;
