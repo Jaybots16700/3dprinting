@@ -22,7 +22,7 @@ export default function Success({ params }: { params: { orderId: string } }) {
 				will reach out with any questions about your order.
 			</p>
 
-			<Link href={`/orders/${params.orderId}`} className="mt-12 rounded-lg bg-blue-700 px-4 py-2 hover:bg-blue-600">
+			<Link href={`/order/${params.orderId}`} className="mt-12 rounded-lg bg-blue-700 px-4 py-2 hover:bg-blue-600">
 				View your order!
 			</Link>
 		</div>

@@ -68,7 +68,7 @@ export default function OrderReceived(order: PartOrder, id: string) {
 
 					{!("id" in order.user) && (
 						<Button
-							href={`${env.URL}/orders/${id}`}
+							href={`${env.URL}/order/${id}`}
 							style={{
 								padding: "8px 16px 8px 16px",
 								background: "#1e40af",

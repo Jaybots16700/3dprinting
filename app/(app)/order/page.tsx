@@ -49,7 +49,7 @@ export default function Order() {
 						timestamp: new Date(),
 						status: "received",
 					});
-					router.push(`/order/success/${orderId}`);
+					router.push(`/order/${orderId}/success`);
 				}}>
 				<div className="mb-4 w-full text-center text-xl text-sky-500">Personal Information</div>
 
