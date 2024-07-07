@@ -34,7 +34,7 @@ export async function addOrder(order: PartOrder) {
 				{
 					url: `${env.URL}/admin?open=${id}`,
 					title: "New Order",
-					description: `${user} placed an order for ${partName}`,
+					description: `${user.name} placed an order for ${partName}`,
 					color: 255,
 				},
 			],
