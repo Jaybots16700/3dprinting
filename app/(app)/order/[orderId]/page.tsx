@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/badge";
 import { Divider } from "@/components/divider";
-import { getOrder } from "@/lib/serverActions";
+import { getOrder, sendPaymentEmail, updateFilament } from "@/lib/serverActions";
 import { PartOrder } from "@/types";
 import { CheckIcon, LinkIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 
 export default function Order({ params }: { params: { orderId: string } }) {
 	const { orderId } = params;
-	const { status } = useSession();
+	const { data: session, status } = useSession();
 	const router = useRouter();
 	const path = usePathname();
 
@@ -113,11 +113,50 @@ export default function Order({ params }: { params: { orderId: string } }) {
 							</div>
 						)}
 					</div>
+
+					{session?.user.isAdmin && (
+						<>
+							<Divider />
+							<form
+								className="flex w-full justify-between"
+								onSubmit={async (e) => {
+									e.preventDefault();
+									await sendPaymentEmail(order);
+
+									// changeStatus("awaiting payment", index, order);
+								}}>
+								<div className="group relative z-0 mt-1 w-1/3">
+									<input
+										type="number"
+										name="filament"
+										defaultValue={order.filament}
+										onChange={(e) => updateFilament(orderId.toString(), e.target.valueAsNumber)}
+										className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
+										placeholder=" "
+										required
+									/>
+									<label
+										htmlFor="filament"
+										className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4">
+										Material (g)<span className="text-red-500"> *</span>
+									</label>
+								</div>
+
+								<div className="flex items-center">
+									<button type="submit" className="rounded-lg bg-blue-900 px-4 py-2 duration-150 hover:bg-blue-800">
+										Send Payment Email
+									</button>
+								</div>
+							</form>
+						</>
+					)}
 				</div>
 			</div>
-			<Link href={`/order/${orderId}/edit`} className="mt-12 rounded-lg bg-blue-700 px-4 py-2 hover:bg-blue-600">
-				Edit
-			</Link>
+			{session?.user.email === order.user.email && (
+				<Link href={`/order/${orderId}/edit`} className="mt-12 rounded-lg bg-blue-700 px-4 py-2 hover:bg-blue-600">
+					Edit
+				</Link>
+			)}
 		</div>
 	);
 }

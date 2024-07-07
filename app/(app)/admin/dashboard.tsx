@@ -141,37 +141,13 @@ export default function AdminDashboard() {
 
 							<Divider />
 
-							<form
-								className="flex w-full justify-between"
-								onSubmit={async (e) => {
-									e.preventDefault();
-									await sendPaymentEmail(order);
-
-									changeStatus("awaiting payment", index, order);
-								}}>
-								<div className="group relative z-0 mt-1 w-1/3">
-									<input
-										type="number"
-										name="filament"
-										defaultValue={order.filament}
-										onChange={(e) => updateFilament(order._id.toString(), e.target.valueAsNumber)}
-										className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
-										placeholder=" "
-										required
-									/>
-									<label
-										htmlFor="filament"
-										className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4">
-										Material (g)<span className="text-red-500"> *</span>
-									</label>
-								</div>
-
-								<div className="flex items-center">
-									<button type="submit" className="rounded-lg bg-blue-900 px-4 py-2 duration-150 hover:bg-blue-800">
-										Send Payment Email
-									</button>
-								</div>
-							</form>
+							<div className="flex w-full justify-center">
+								<Link
+									href={`/order/${order._id.toString()}`}
+									className="rounded-lg bg-blue-900 px-4 py-2 duration-150 hover:bg-blue-800">
+									View More
+								</Link>
+							</div>
 						</DisclosurePanel>
 					</Disclosure>
 				))}
