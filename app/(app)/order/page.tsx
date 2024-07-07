@@ -66,7 +66,7 @@ export default function Order() {
 					<label
 						htmlFor="name"
 						className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:translate-x-1/4">
-						Name
+						Name<span className="text-red-500"> *</span>
 					</label>
 				</div>
 				<div className="group relative z-0 mb-5 w-full">
@@ -82,7 +82,7 @@ export default function Order() {
 					<label
 						htmlFor="email"
 						className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4">
-						Email address
+						Email address<span className="text-red-500"> *</span>
 					</label>
 				</div>
 
@@ -102,7 +102,7 @@ export default function Order() {
 					<label
 						htmlFor="partName"
 						className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4">
-						Part Name
+						Part Name<span className="text-red-500"> *</span>
 					</label>
 				</div>
 				<div className="group relative z-0 mb-5 w-full">
@@ -118,7 +118,7 @@ export default function Order() {
 					<label
 						htmlFor="link"
 						className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-500 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4">
-						Google Drive Link
+						Google Drive Link<span className="text-red-500"> *</span>
 					</label>
 					<Popover className="absolute bottom-2 right-1 size-5 text-gray-400">
 						<PopoverButton className="outline-none">
