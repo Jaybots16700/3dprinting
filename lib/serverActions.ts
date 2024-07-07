@@ -6,8 +6,10 @@ import { ObjectId } from "mongodb";
 import { env } from "@/env";
 import { Resend } from "resend";
 import OrderReceived from "@/components/emails/orderReceived";
+import PaymentEmail from "@/components/emails/payment";
 
 const resend = new Resend(env.RESEND_API_KEY);
+const fromEmail = "matthew@matthewglasser.org";
 
 export async function getAllOrders() {
 	const { ordersDb } = await connectToDatabase();
@@ -46,7 +48,7 @@ export async function addOrder(order: PartOrder) {
 	});
 
 	await resend.emails.send({
-		from: "matthew@matthewglasser.org",
+		from: fromEmail,
 		to: user.email,
 		subject: "Order Received!",
 		react: OrderReceived(order),
@@ -65,4 +67,13 @@ export async function updateFilament(orderId: string, filament: number) {
 	const { ordersDb } = await connectToDatabase();
 
 	return ordersDb.updateOne({ _id: new ObjectId(orderId) }, { $set: { filament } });
+}
+
+export async function sendPaymentEmail(order: PartOrder) {
+	await resend.emails.send({
+		from: fromEmail,
+		to: order.user.email,
+		subject: "Order Processed!",
+		react: PaymentEmail(order),
+	});
 }

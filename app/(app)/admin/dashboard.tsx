@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/badge";
 import { Divider } from "@/components/divider";
-import { getAllOrders, updateFilament, updateStatus } from "@/lib/serverActions";
+import { getAllOrders, sendPaymentEmail, updateFilament, updateStatus } from "@/lib/serverActions";
 import { PartOrder, OrderStatus } from "@/types";
 import {
 	Disclosure,
@@ -136,7 +136,10 @@ export default function AdminDashboard() {
 								</div>
 
 								<div className="flex items-center">
-									<button className="rounded-lg bg-blue-900 px-4 py-2 duration-150 hover:bg-blue-800" type="button">
+									<button
+										type="button"
+										className="rounded-lg bg-blue-900 px-4 py-2 duration-150 hover:bg-blue-800"
+										onClick={() => order.filament && sendPaymentEmail(order)}>
 										Send Payment Email
 									</button>
 								</div>
