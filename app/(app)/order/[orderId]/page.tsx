@@ -74,6 +74,36 @@ export default function Order({ params }: { params: { orderId: string } }) {
 							)}
 						</div>
 					</div>
+
+					<Divider />
+
+					<div className="w-full space-y-2">
+						<div>
+							<span className="font-light text-gray-200">School: </span>
+							{order.delivery.school ? (
+								<CheckIcon className="inline size-4 text-green-600" />
+							) : (
+								<XMarkIcon className="inline size-4 text-red-500" />
+							)}
+						</div>
+						{order.delivery.school ? (
+							<>
+								<div>
+									<span className="font-light text-gray-200">Period: </span>
+									<span className="font-semibold">{order.delivery.period}</span>
+								</div>
+								<div>
+									<span className="font-light text-gray-200">Room: </span>
+									<span className="font-semibold">{order.delivery.room}</span>
+								</div>
+							</>
+						) : (
+							<div>
+								<span className="font-light text-gray-200">Location: </span>
+								<span className="font-semibold">{order.delivery.location}</span>
+							</div>
+						)}
+					</div>
 				</div>
 			</div>
 		</div>
