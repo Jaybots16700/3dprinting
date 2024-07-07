@@ -2,14 +2,16 @@
 
 import { pricePerGram } from "@/lib/constants";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { addOrder } from "@/lib/serverActions";
-import { Timestamp } from "mongodb";
 import { Divider } from "@/components/divider";
+import { useSession } from "next-auth/react";
 
 export default function Order() {
+	const { data: session } = useSession();
+
 	const router = useRouter();
 
 	const [username, setUsername] = useState("");
@@ -19,6 +21,11 @@ export default function Order() {
 	const [purpose, setPurpose] = useState("");
 	const [other, setOther] = useState("");
 	const [timelapse, setTimelapse] = useState(false);
+
+	useEffect(() => {
+		session?.user.name && setUsername(session.user.name);
+		session?.user.email && setEmail(session.user.email);
+	}, [session]);
 
 	return (
 		<div className="flex h-full w-full flex-col items-center py-24">
