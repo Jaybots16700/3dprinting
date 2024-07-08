@@ -25,6 +25,14 @@ export default function Header() {
 				href="/admin">
 				Order
 			</Link>
+			{session && (
+				<Link
+					type="button"
+					className="flex items-center space-x-2 rounded-md px-2 py-1 duration-150 hover:bg-white/5"
+					href="/orders">
+					Your Orders
+				</Link>
+			)}
 			{session?.user.isAdmin && (
 				<Link
 					type="button"
