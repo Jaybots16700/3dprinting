@@ -1,14 +1,10 @@
-"use client";
-
 import { Badge } from "@/components/badge";
 import { Divider } from "@/components/divider";
-import { getAllOrders } from "@/lib/serverActions";
 import { PartOrder } from "@/types";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
 import { CheckIcon, LinkIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { WithId } from "mongodb";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export function Dashboard({ orders }: { orders: WithId<PartOrder>[] }) {
 	return (
@@ -110,23 +106,6 @@ export function Dashboard({ orders }: { orders: WithId<PartOrder>[] }) {
 					</DisclosurePanel>
 				</Disclosure>
 			))}
-		</div>
-	);
-}
-
-export function AdminDashboard() {
-	const [orders, setOrders] = useState<WithId<PartOrder>[]>([]);
-
-	useEffect(() => {
-		(async () => {
-			setOrders(await getAllOrders());
-		})();
-	});
-
-	return (
-		<div className="flex flex-col items-center justify-between p-24">
-			<h1 className="mb-24 text-6xl font-semibold">Admin Dashboard</h1>
-			<Dashboard orders={orders} />{" "}
 		</div>
 	);
 }

@@ -10,7 +10,6 @@ import PaymentEmail from "@/components/emails/payment";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth";
 import OrderUpdated from "@/components/emails/orderUpdated";
-import { redirect } from "next/navigation";
 
 const resend = new Resend(env.RESEND_API_KEY);
 const fromEmail = "matthew@matthewglasser.org";
@@ -19,6 +18,15 @@ export async function getAllOrders() {
 	const { ordersDb } = await connectToDatabase();
 
 	return await ordersDb.find().toArray();
+}
+
+export async function getOrdersByUser() {
+	const { ordersDb } = await connectToDatabase();
+	const session = await getServerSession(authOptions);
+
+	if (!session?.user.email) return [];
+
+	return await ordersDb.find({ "user.email": session.user.email }).toArray();
 }
 
 export async function getOrder(orderId: string) {

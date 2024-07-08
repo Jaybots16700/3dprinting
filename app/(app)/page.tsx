@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/badge";
 import { getAllOrders } from "@/lib/serverActions";
-import type { OrderStatus, PartOrder } from "@/types";
+import type { PartOrder } from "@/types";
 import { ArrowLongRightIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
