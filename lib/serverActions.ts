@@ -53,7 +53,7 @@ export async function addOrder(order: PartOrder) {
 			username: "3D Printing Order",
 			embeds: [
 				{
-					url: `${env.URL}/orders/${id}`,
+					url: `${env.URL}/order/${id}`,
 					title: "New Order",
 					description: `${user.name} placed an order for ${partName}`,
 					color: 255,
