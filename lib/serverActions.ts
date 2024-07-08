@@ -10,6 +10,7 @@ import PaymentEmail from "@/components/emails/payment";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth";
 import OrderUpdated from "@/components/emails/orderUpdated";
+import { redirect } from "next/navigation";
 
 const resend = new Resend(env.RESEND_API_KEY);
 const fromEmail = "matthew@matthewglasser.org";
@@ -111,7 +112,12 @@ export async function updateFilament(orderId: string, filament: number) {
 	return ordersDb.updateOne({ _id: new ObjectId(orderId) }, { $set: { filament } });
 }
 
-export async function sendPaymentEmail(order: PartOrder) {
+export async function sendPaymentEmail(orderId: string) {
+	const { ordersDb } = await connectToDatabase();
+	const order = await ordersDb.findOne({ _id: new ObjectId(orderId) });
+
+	if (!order?.filament) redirect("/not-found");
+
 	await resend.emails.send({
 		from: fromEmail,
 		to: order.user.email,

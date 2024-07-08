@@ -25,6 +25,8 @@ export default function PaymentEmail(order: PartOrder) {
 		color: "#000",
 	};
 
+	const cost = (pricePerGram * (order.filament as number) + (order.timelapse ? 2 : 0)).toFixed(2);
+
 	return (
 		<Html>
 			<Head />
@@ -60,8 +62,7 @@ export default function PaymentEmail(order: PartOrder) {
 						<Heading style={headingStyles}>Order Processed!</Heading>
 						<Text style={textStyles}>Hello {order.user.name},</Text>
 						<Text style={textStyles}>
-							We have processed your order for {order.partName} and comes to a total of $
-							{(pricePerGram * (order.filament as number) + (order.timelapse ? 2 : 0)).toFixed(2)} ($
+							We have processed your order for {order.partName} and comes to a total of ${cost} ($
 							{pricePerGram} per gram for {order.filament as number} grams
 							{order?.timelapse ? " + $2 for the timelapse" : ""})
 						</Text>

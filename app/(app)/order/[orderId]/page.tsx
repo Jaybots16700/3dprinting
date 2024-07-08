@@ -23,6 +23,11 @@ export default function Order({ params }: { params: { orderId: string } }) {
 		(async () => setOrder(await getOrder(orderId)))();
 	}, [orderId]);
 
+	const changeStatus = async (orderId: string, newStatus: OrderStatus) => {
+		await updateStatus(orderId, newStatus);
+		setOrder((prev) => (prev ? { ...prev, status: newStatus } : null));
+	};
+
 	if (status === "unauthenticated") return router.push(`/signin?redirect=${path}`);
 	if (!order) return <></>;
 
@@ -40,9 +45,8 @@ export default function Order({ params }: { params: { orderId: string } }) {
 					{session?.user.isAdmin ? (
 						<Listbox
 							value={order.status}
-							onChange={async (newStatus) => {
-								await updateStatus(orderId, newStatus);
-								setOrder((prev) => (prev ? { ...prev, status: newStatus } : null));
+							onChange={(newStatus) => {
+								changeStatus(orderId, newStatus);
 							}}>
 							<ListboxButton className="flex outline-none">
 								<Badge status={order.status} />
@@ -146,13 +150,14 @@ export default function Order({ params }: { params: { orderId: string } }) {
 					{session?.user.isAdmin && (
 						<>
 							<Divider />
+
 							<form
 								className="flex w-full justify-between"
 								onSubmit={async (e) => {
 									e.preventDefault();
-									await sendPaymentEmail(order);
+									await sendPaymentEmail(orderId);
 
-									// changeStatus("awaiting payment", index, order);
+									changeStatus(orderId, "awaiting payment");
 								}}>
 								<div className="group relative z-0 mt-1 w-1/3">
 									<input
