@@ -6,6 +6,7 @@ import { InformationCircleIcon } from "@heroicons/react/24/solid";
 export default function OrderForm({
 	onSubmit,
 	states,
+	type,
 }: {
 	onSubmit: (e: FormEvent<HTMLFormElement>) => void;
 	states: {
@@ -32,6 +33,7 @@ export default function OrderForm({
 		location: string;
 		setLocation: (value: string) => void;
 	};
+	type: "new" | "edit";
 }) {
 	const {
 		username,
@@ -86,9 +88,10 @@ export default function OrderForm({
 					name="email"
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
-					className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
+					className={`peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-0 disabled:cursor-not-allowed ${type === "edit" ? "text-gray-400" : "text-white"}`}
 					placeholder=" "
 					required
+					disabled={type === "edit"}
 				/>
 				<label
 					htmlFor="email"

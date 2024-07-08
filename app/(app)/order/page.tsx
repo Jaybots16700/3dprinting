@@ -78,6 +78,7 @@ export default function Order() {
 					setLocation,
 					username,
 				}}
+				type="new"
 			/>
 		</div>
 	);
