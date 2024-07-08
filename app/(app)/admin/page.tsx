@@ -1,7 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import AdminDashboard from "./dashboard";
+import { AdminDashboard } from "@/components/dashboard";
 
 export default async function Admin() {
 	const session = await getServerSession(authOptions);
