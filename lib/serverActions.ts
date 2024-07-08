@@ -112,12 +112,7 @@ export async function updateFilament(orderId: string, filament: number) {
 	return ordersDb.updateOne({ _id: new ObjectId(orderId) }, { $set: { filament } });
 }
 
-export async function sendPaymentEmail(orderId: string) {
-	const { ordersDb } = await connectToDatabase();
-	const order = await ordersDb.findOne({ _id: new ObjectId(orderId) });
-
-	if (!order?.filament) redirect("/not-found");
-
+export async function sendPaymentEmail(order: PartOrder) {
 	await resend.emails.send({
 		from: fromEmail,
 		to: order.user.email,

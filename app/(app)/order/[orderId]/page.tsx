@@ -25,7 +25,7 @@ export default function Order({ params }: { params: { orderId: string } }) {
 
 	const changeStatus = async (orderId: string, newStatus: OrderStatus) => {
 		await updateStatus(orderId, newStatus);
-		setOrder((prev) => (prev ? { ...prev, status: newStatus } : null));
+		setOrder((prev) => ({ ...(prev as PartOrder), status: newStatus }));
 	};
 
 	if (status === "unauthenticated") return router.push(`/signin?redirect=${path}`);
@@ -155,7 +155,7 @@ export default function Order({ params }: { params: { orderId: string } }) {
 								className="flex w-full justify-between"
 								onSubmit={async (e) => {
 									e.preventDefault();
-									await sendPaymentEmail(orderId);
+									await sendPaymentEmail(order);
 
 									changeStatus(orderId, "awaiting payment");
 								}}>
@@ -164,7 +164,10 @@ export default function Order({ params }: { params: { orderId: string } }) {
 										type="number"
 										name="filament"
 										defaultValue={order.filament}
-										onChange={(e) => updateFilament(orderId.toString(), e.target.valueAsNumber)}
+										onChange={(e) => {
+											updateFilament(orderId.toString(), e.target.valueAsNumber);
+											setOrder((prev) => ({ ...(prev as PartOrder), filament: e.target.valueAsNumber }));
+										}}
 										className="peer block w-full appearance-none border-0 border-b-2 border-gray-600 bg-transparent px-0 py-2.5 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-0"
 										placeholder=" "
 										required
