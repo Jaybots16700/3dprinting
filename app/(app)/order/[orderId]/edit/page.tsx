@@ -60,7 +60,7 @@ export default function Edit({ params }: { params: { orderId: string } }) {
 
 	return (
 		<div className="flex h-full w-full flex-col items-center py-24">
-			<h1 className="text-6xl font-semibold">Place an Order</h1>
+			<h1 className="text-6xl font-semibold">Edit your Order</h1>
 			<span className="mt-4 font-light text-slate-300">Pricing: ${pricePerGram} per gram</span>
 
 			<form
